@@ -55,6 +55,27 @@ jobs:
 - _Note_: `workflow_id` can be a Workflow ID (number) or Workflow File Name (string)
 - _Note_: `workflow_id` also accepts a comma separated list if you need to cancel multiple workflows
 
+
+### Ignore head sha
+
+If the workflow is dispatched due to an event that doesn't change the head sha, you must ignore the validation by head sha to get the previous non completed runs. 
+
+```yml
+name: Cancel
+on: [push]
+jobs:
+  cancel:
+    name: 'Cancel Previous Runs'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: styfle/cancel-workflow-action@0.6.0
+        with:
+          workflow_id: 479426
+          access_token: ${{ github.token }}
+          ignore_headSha: true
+```
+
 At the time of writing `0.6.0` is the latest release but you can select any [release](https://github.com/styfle/cancel-workflow-action/releases).
 
 ## Contributing
